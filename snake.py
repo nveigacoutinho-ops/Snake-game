@@ -124,10 +124,12 @@ html = """
   function tick() {
     dir = nextDir;
     const [hx, hy] = snake[0];
-    const nh = [hx + dir[0], hy + dir[1]];
+    const nh = [
+      (hx + dir[0] + COLS) % COLS,
+      (hy + dir[1] + ROWS) % ROWS,
+    ];
 
-    if (nh[0] < 0 || nh[0] >= COLS || nh[1] < 0 || nh[1] >= ROWS ||
-        snake.some(s => s[0] === nh[0] && s[1] === nh[1])) {
+    if (snake.some(s => s[0] === nh[0] && s[1] === nh[1])) {
       clearInterval(loop);
       running = false;
       msgEl.textContent = 'Game Over! ' + score + ' pts';
